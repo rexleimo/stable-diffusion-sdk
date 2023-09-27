@@ -12,6 +12,7 @@ var instance *gin.Engine
 func GetInstance() *gin.Engine {
 	once.Do(func() {
 		instance = gin.Default()
+		instance.Static("/public", "./public")
 	})
 	return instance
 }
