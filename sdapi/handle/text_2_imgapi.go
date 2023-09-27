@@ -3,11 +3,12 @@ package handle
 import (
 	"fmt"
 	"stable-diffusion-sdk/sdapi/payload"
+	"stable-diffusion-sdk/utils/config"
 	"stable-diffusion-sdk/utils/http"
 )
 
-func Text2ImgApi() {
-	payload := &payload.SDParams{
+func Text2ImgApi() ([]string, error) {
+	params := &payload.SDParams{
 		Prompt:         "car",
 		NegativePrompt: "",
 		OverrideSettings: payload.OverrideSettings{
@@ -22,7 +23,13 @@ func Text2ImgApi() {
 		SamplerIndex: "Euler",
 		BatchSize:    1,
 	}
-	fmt.Println(payload)
-	resp, _ := http.GetInstance().R().SetHeader("Content-Type", "application/json").SetBody(payload).Post("sdapi/v1/txt2img")
-	fmt.Println(resp.String())
+	resp, err := http.GetInstance().R().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post(fmt.Sprintf("%ssdapi/v1/txt2img", config.GetConfig().SDServer.Host))
+
+	if err != nil {
+		return nil, err
+	}
+
+	apiResp := resp.Result().(*payload.SDResponse)
+
+	return apiResp.Images, nil
 }
