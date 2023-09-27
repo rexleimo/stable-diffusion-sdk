@@ -1,9 +1,7 @@
 package handle
 
 import (
-	"fmt"
 	"stable-diffusion-sdk/sdapi/payload"
-	"stable-diffusion-sdk/utils/config"
 	"stable-diffusion-sdk/utils/http"
 )
 
@@ -23,7 +21,7 @@ func Text2ImgApi() ([]string, error) {
 		SamplerIndex: "Euler",
 		BatchSize:    1,
 	}
-	resp, err := http.GetInstance().R().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post(fmt.Sprintf("%ssdapi/v1/txt2img", config.GetConfig().SDServer.Host))
+	resp, err := http.GetSDServer().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post("sdapi/v1/txt2img")
 
 	if err != nil {
 		return nil, err
