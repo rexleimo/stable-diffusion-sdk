@@ -3,6 +3,7 @@ package text2img
 import (
 	"encoding/base64"
 	"fmt"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"stable-diffusion-sdk/core/httpserver"
@@ -37,14 +38,14 @@ func Init() {
 		fmt.Println(json)
 		s, _ := handle.Text2ImgApi(*json)
 
-		timestampFunc := func() int64 {
-			return time.Now().UnixMicro()
+		timestampFunc := func() string {
+			return fmt.Sprintf("%d%d", time.Now().Unix(), rand.Intn(1000))
 		}
 
 		image := make([]string, 0, 10)
 		for _, v := range s {
 			timestamp := timestampFunc()
-			path := fmt.Sprintf("public/sd_block/%s/%d.png", time.Now().Format("20060102"), timestamp)
+			path := fmt.Sprintf("public/sd_block/%s/%s.png", time.Now().Format("20060102"), timestamp)
 			image = append(image, path)
 
 			go func(bStr string, p string) {
@@ -55,7 +56,6 @@ func Init() {
 					fmt.Println(err)
 				}
 			}(v, path)
-
 		}
 
 		ctx.JSON(200, gin.H{
