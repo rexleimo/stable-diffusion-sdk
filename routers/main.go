@@ -1,7 +1,7 @@
 package routers
 
 import (
-	httpserver "stable-diffusion-sdk/core/http-server"
+	"stable-diffusion-sdk/core/httpserver"
 	text2img "stable-diffusion-sdk/routers/sd-router/text-2-img"
 )
 
