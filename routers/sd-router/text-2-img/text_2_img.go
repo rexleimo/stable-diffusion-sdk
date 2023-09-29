@@ -16,7 +16,7 @@ import (
 
 func Init() {
 	group := httpserver.GetInstance().Group("sd")
-	group.GET("/text2img", func(ctx *gin.Context) {
+	group.POST("/text2img", func(ctx *gin.Context) {
 		json := &payload.SDParams{
 			Seed:         -1,
 			Width:        512,
