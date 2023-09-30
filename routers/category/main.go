@@ -8,4 +8,5 @@ func Init() {
 	group := httpserver.GetInstance().Group("category")
 	group.POST("", create)
 	group.GET("", query)
+	group.GET("/attr/:id", getAttrValues)
 }

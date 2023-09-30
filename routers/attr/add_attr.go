@@ -18,12 +18,12 @@ func addAttr(ctx *gin.Context) {
 
 	c := mongodb.GetInstance().Collection(json.TableName())
 
-	_, err2 := c.InsertOne(context.Background(), json)
+	result, err2 := c.InsertOne(context.Background(), json)
 
 	if err2 != nil {
 		ctx.JSON(400, gin.H{"error": err2.Error()})
 		return
 	}
 
-	ctx.JSON(200, gin.H{"success": true})
+	ctx.JSON(200, gin.H{"success": true, "data": result.InsertedID})
 }
