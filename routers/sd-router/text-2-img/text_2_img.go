@@ -24,8 +24,11 @@ func Init() {
 			CfgScale:     7,
 			Steps:        30,
 			Eta:          0,
-			SamplerIndex: "Euler",
+			SamplerIndex: "DPM++ 2M Karras",
 			BatchSize:    1,
+			OverrideSettings: payload.OverrideSettings{
+				SdModelCheckpoint: "realisticVisionV51_v40VAE.safetensors [e9d3cedc4b]",
+			},
 		}
 		err := ctx.ShouldBindJSON(&json)
 

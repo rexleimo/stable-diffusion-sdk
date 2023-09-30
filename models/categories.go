@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,8 +16,8 @@ type Categories struct {
 	Sort      int                `json:"sort" bson:"sort"`
 	DeletedAt string             `json:"deleted_at" bson:"deleted_at"`
 	IsDeleted int                `json:"is_deleted" bson:"is_deleted"`
-	CreateAt  time.Time          `json:"create_at,omitempty" bson:"create_at"`
-	UpdateAt  time.Time          `json:"update_at,omitempty" bson:"update_at"`
+	CreateAt  time.Time          `json:"create_at,omitempty" bson:"create_at,omitempty"`
+	UpdateAt  time.Time          `json:"update_at,omitempty" bson:"update_at,omitempty"`
 	Children  []*Categories
 }
 
@@ -27,7 +26,6 @@ func (*Categories) TableName() string {
 }
 
 func (i *Categories) MarshalBSON() ([]byte, error) {
-	fmt.Println("xx")
 	if i.CreateAt.IsZero() {
 		i.CreateAt = time.Now()
 	}
