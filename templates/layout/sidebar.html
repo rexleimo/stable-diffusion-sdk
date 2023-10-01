@@ -1,0 +1,40 @@
+{{ define "layout/sidebar.html" }}
+<!--begin::Sidebar-->
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+  <div class="sidebar-brand">
+    <a href="./index.html" class="brand-link">
+      <img src="/public/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow">
+      <span class="brand-text fw-light">Rex Ai Drawing</span>
+    </a>
+  </div>
+  <!--begin::Sidebar Wrapper-->
+  <div class="sidebar-wrapper">
+    <nav class="mt-2">
+      <!--begin::Sidebar Menu-->
+      <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+        <!-- <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-pencil-square"></i>
+            <p>
+              Forms
+              <i class="nav-arrow bi bi-chevron-right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="./forms/general.html" class="nav-link"><i class="nav-icon bi bi-circle"></i>
+                <p>General Elements</p>
+              </a></li>
+          </ul>
+        </li> -->
+        <li class="nav-item">
+          <a href="/admin/category" class="nav-link">
+            <i class="nav-icon bi bi-grid-3x2-gap-fill"></i>
+            <p>分类管理</p>
+          </a>
+        </li>
+      </ul>
+      <!--end::Sidebar Menu-->
+    </nav>
+  </div>
+  <!--end::Sidebar Wrapper-->
+</aside>
+<!--end::Sidebar-->
+{{end}}

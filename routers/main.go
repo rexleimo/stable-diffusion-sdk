@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"stable-diffusion-sdk/core/httpserver"
 	attrs "stable-diffusion-sdk/routers/attr"
 	"stable-diffusion-sdk/routers/attrvalues"
 	"stable-diffusion-sdk/routers/category"
@@ -15,5 +14,4 @@ func Init() {
 	category.Init()
 	attrs.Init()
 	attrvalues.Init()
-	httpserver.GetInstance().Run(":7100")
 }
