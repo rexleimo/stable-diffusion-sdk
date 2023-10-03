@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"stable-diffusion-sdk/core/httpserver"
+	"stable-diffusion-sdk/handles"
 	"stable-diffusion-sdk/sdapi/handle"
 	"stable-diffusion-sdk/sdapi/payload"
 	"time"
@@ -17,20 +18,39 @@ import (
 func Init() {
 	group := httpserver.GetInstance().Group("sd")
 	group.POST("/text2img", func(ctx *gin.Context) {
-		json := &payload.SDParams{
-			Seed:         -1,
-			Width:        512,
-			Height:       512,
-			CfgScale:     7,
-			Steps:        30,
-			Eta:          0,
-			SamplerIndex: "DPM++ 2M Karras",
-			BatchSize:    1,
-			OverrideSettings: payload.OverrideSettings{
-				SdModelCheckpoint: "realisticVisionV51_v40VAE.safetensors [e9d3cedc4b]",
-			},
+
+		cid := ctx.Query("cid")
+
+		if cid == "" {
+			ctx.JSON(400, gin.H{"error": "cid is empty"})
+			return
 		}
+
+		json := &payload.SDParams{
+			Seed:     -1,
+			Width:    512,
+			Height:   512,
+			CfgScale: 7,
+			Steps:    30,
+			Eta:      0,
+			// SamplerIndex: "DPM++ 2M Karras",
+			BatchSize: 1,
+			// OverrideSettings: payload.OverrideSettings{
+			// 	SdModelCheckpoint: "realisticVisionV51_v40VAE.safetensors [e9d3cedc4b]",
+			// },
+		}
+
+		categroy, _ := handles.GetCategoryById(cid)
+		json.OverrideSettings.SdModelCheckpoint = categroy.Checkpoint
+		json.CfgScale = categroy.CfgScale
+		json.Steps = categroy.Steps
+		json.SamplerName = categroy.SamplerIndex
+
 		err := ctx.ShouldBindJSON(&json)
+
+		json.NegativePrompt = fmt.Sprintf(`%s,%s`, json.NegativePrompt, categroy.NegativePrompt)
+		json.Prompt = fmt.Sprintf(`%s,%s`, json.Prompt, categroy.Pormpt)
+		fmt.Println(json)
 
 		if err != nil {
 			ctx.JSON(400, gin.H{
@@ -38,7 +58,6 @@ func Init() {
 			})
 			return
 		}
-		fmt.Println(json)
 		s, _ := handle.Text2ImgApi(*json)
 
 		timestampFunc := func() string {

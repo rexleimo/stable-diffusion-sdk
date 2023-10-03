@@ -13,7 +13,7 @@ type Attr struct {
 	// Name is the name of the industry
 	Name   string `json:"name" binding:"required"`
 	EnName string `json:"en_name" bson:"en_name" binding:"required"` //由于没钱不调用翻译api
-	PID    string `json:"pid" bson:"pid" binding:"required"`
+	// PID    string `json:"pid" bson:"pid" binding:"required"`
 	Covery string `json:"coverage" bson:"cover"`
 
 	Values []AttrValue `json:"values" bson:"-"`

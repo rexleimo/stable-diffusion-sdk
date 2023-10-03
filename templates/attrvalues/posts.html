@@ -1,0 +1,42 @@
+{{define "attrvalues/posts.html"}}
+{{template "public/header.html" .}}
+<div class="row">
+  <div class="col-md-6">
+    <form>
+      <div class="mb-3">
+        <label for="name" class="form-label">名称</label>
+        <input type="text" name="name" class="form-control" id="name" placeholder="请输入名称" value="{{.info.Name}}" />
+      </div>
+      <div class="mb-3">
+        <label for="enname" class="form-label">英文</label>
+        <input type="text" name="en_name" class="form-control" id="enname" placeholder="英文提示词" value="{{.info.EnName}}" />
+      </div>
+      <div class="mb-3">
+        <label for="enname" class="form-label">属性</label>
+        <select name="pid" class="form-select" aria-label="Default select attr">
+          {{range .attrs}}
+          <option value="{{.ID.Hex}}">{{.Name}}</option>
+          {{end}}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+  </div>
+</div>
+{{template "public/footer.html" .}}
+<script>
+  document.forms.item(0).onsubmit = function(e) {
+    e.preventDefault();
+    formData = new FormData(this);
+    payload = Object.fromEntries(formData);
+    fetch("", {
+      method: "post",
+      body: JSON.stringify(payload),
+    }).then(res => {
+      swal("Good job!", "操作成功", "success");
+    }).catch(err => {
+      swal("Error job!", "操作失败", "error");
+    })
+  }
+</script>
+{{end}}

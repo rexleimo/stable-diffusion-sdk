@@ -1,0 +1,37 @@
+{{define "attrvalues/list.html"}}
+{{template "public/header.html" .}}
+<div class="row">
+  <div class="col-md-12">
+    <a href="/admin/attrvalues/post" class="btn btn-primary">Add Post</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>名称</th>
+          <th>prompt</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .list}}
+        <tr>
+          <td>{{.ID.Hex}}</td>
+          <td>{{.Name}}</td>
+          <td>{{.EnName}}</td>
+          <td>
+            <a href="/admin/attrvalues/post?id={{.ID.Hex}}">编辑</a>
+            <a href="/admin/attrvalues/{{.ID.Hex}}">删除</a>
+          </td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+</div>
+{{template "public/footer.html" .}}
+{{end}}
+

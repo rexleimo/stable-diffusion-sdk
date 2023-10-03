@@ -1,26 +1,121 @@
 {{define "category/index.html"}}
-
-{{template "layout/default.html" .}}
-
-{{block "content" .}}
-
+{{template "public/header.html" .}}
 <div class="row">
   <div class="col-md-12">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>分类名称</th>
-          <th>分类描述</th>
-          <th>创建时间</th>
-          <th>更新时间</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-    </table>
+    <a href="/admin/category" class="btn btn-primary">
+      Add Category
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <ul>
+      {{range .list}}
+      <li>
+        {{.Name}}
+      </li>
+      <ul>
+        {{range .Children}}
+        <li>
+          <a href="/admin/category?id={{.ID.Hex}}">{{.Name}}</a>
+        </li>
+        {{end}}
+      </ul>
+      {{end}}
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <form>
+      <div class="mb-3">
+        <label for="name" class="form-label">分类名称</label>
+        <input type="text" name="name" class="form-control" id="name" placeholder="请输入分类名称" />
+      </div>
+      <div class="mb-3">
+        <label for="enname" class="form-label">英文</label>
+        <input type="text" name="en_name" class="form-control" id="enname" placeholder="英文提示词" />
+      </div>
+      <div class="mb-3">
+        <label for="pid" class="form-label">父级分类</label>
+        <select class="form-select" name="pid" id="pid" aria-label="Default select example">
+          <option value="">请选择</option>
+          {{range .list}}
+          <option value="{{.ID.Hex}}">{{.Name}}</option>
+          {{end}}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="attrs" class="form-label">属性管理</label>
+        <select id="select2" class="form-select" name="attrs[]" id="attrs" aria-label="Default select example" multiple>
+          {{range .attrs}}
+          <option value="{{.ID.Hex}}">{{.Name}}</option>
+          {{end}}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="Checkpoint" class="form-label">Checkpoint</label>
+        <input type="text" name="checkpoint" class="form-control" id="Checkpoint" placeholder="Checkpoint" />
+      </div>
+      <div class="mb-3">
+        <label for="Sampler" class="form-label">Sampler</label>
+        <input type="text" name="sampler_index" class="form-control" id="Sampler" placeholder="Sampler" />
+      </div>
+      <div class="mb-3">
+        <label for="CfgScale" class="form-label">CfgScale</label>
+        <input type="number" name="cfg_scale" class="form-control" id="CfgScale" placeholder="CfgScale" />
+      </div>
+      <div class="mb-3">
+        <label for="Steps" class="form-label">Steps</label>
+        <input type="number" name="steps" class="form-control" id="Steps" placeholder="Steps" />
+      </div>
+      <div class="mb-3">
+        <label for="Prompt" class="form-label">Prompt</label>
+        <textarea name="prompt" id="Prompt" class="form-control">
+
+        </textarea>
+      </div>
+      <div class="mb-3">
+        <label for="NPrompt" class="form-label">方向提示词</label>
+        <textarea name="negative_prompt" id="NPrompt" class="form-control">
+
+        </textarea>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">提交</button>
+    </form>
   </div>
 </div>
 
-{{end}}
+{{template "public/footer.html" .}}
 
+<script>
+  document.forms.item(0).onsubmit = function(e) {
+    e.preventDefault();
+    formData = new FormData(this);
+    // formData to json string
+    fetch("/admin/category", {
+      method: "POST",
+      body: formData
+    }).then(async (res) => {
+      if (res.ok) {
+        swal("Good job!", "操作成功", "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      } else {
+        const json = await res.json();
+        throw new Error(json.error);
+      }
+    }).catch((err) => {
+      swal("Error job!", err.message, "error");
+    })
+  }
+</script>
+<script>
+  $('#select2').select2({
+    theme: "bootstrap-5",
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    closeOnSelect: false,
+  })
+</script>
 {{end}}
