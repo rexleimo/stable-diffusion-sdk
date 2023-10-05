@@ -22,7 +22,7 @@ func update(ctx *gin.Context) {
 
 	id, _ := primitive.ObjectIDFromHex(idParam)
 	var payload models.Categories
-	if err := ctx.Bind(&payload); err != nil {
+	if err := ctx.ShouldBind(&payload); err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -30,6 +30,8 @@ func update(ctx *gin.Context) {
 	collection := mongodb.GetInstance().Collection(payload.TableName())
 	payload.CreateAt = time.Now()
 	payload.UpdateAt = time.Now()
+
+	fmt.Println(payload)
 
 	_, err2 := collection.UpdateOne(context.Background(), bson.D{{Key: "_id", Value: id}}, bson.D{{Key: "$set", Value: payload}})
 	if err2 != nil {
