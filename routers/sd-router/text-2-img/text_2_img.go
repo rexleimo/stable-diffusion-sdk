@@ -28,8 +28,8 @@ func Init() {
 
 		json := &payload.SDParams{
 			Seed:     -1,
-			Width:    512,
-			Height:   512,
+			Width:    1024,
+			Height:   1024,
 			CfgScale: 7,
 			Steps:    30,
 			Eta:      0,
