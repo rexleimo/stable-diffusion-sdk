@@ -28,7 +28,6 @@ func update(ctx *gin.Context) {
 	}
 
 	collection := mongodb.GetInstance().Collection(payload.TableName())
-	payload.CreateAt = time.Now()
 	payload.UpdateAt = time.Now()
 
 	fmt.Println(payload)

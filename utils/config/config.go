@@ -2,31 +2,31 @@ package config
 
 import (
 	"fmt"
+	"io/ioutil"
 	"sync"
 
-	"github.com/spf13/viper"
+	"gopkg.in/yaml.v2"
 )
 
 var once sync.Once
 var systemConfig *Config
 
 type Config struct {
-	SDServer SDServer `yaml:"sdserver"`
-	MongoDB  MongoDB  `yaml:"mongodb"`
+	SDServer      SDServer      `yaml:"sdserver"`
+	MongoDB       MongoDB       `yaml:"mongodb"`
+	MiniAppConfig MiniAppConfig `yaml:"miniapp"`
 }
 
 func GetConfig() *Config {
 	once.Do(func() {
-		viper.SetConfigFile(".config.yaml")
-		err := viper.ReadInConfig()
+		yamlFile, err := ioutil.ReadFile(".config.yaml")
 		if err != nil {
 			panic(fmt.Errorf("Fatal error config file: %s \n", err))
 		}
 
 		// 读取配置信息
 		config := Config{}
-		err = viper.Unmarshal(&config)
-
+		err = yaml.Unmarshal(yamlFile, &config)
 		if err != nil {
 			panic(fmt.Errorf("unable to decode into struct, %v", err))
 		}

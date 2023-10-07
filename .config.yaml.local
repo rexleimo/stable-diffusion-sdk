@@ -4,3 +4,7 @@ sdserver:
 mongodb:
   host: mongodb://127.0.0.1:27017
   dbname: aidb
+
+miniapp:
+  appid: 
+  appsecret: 
