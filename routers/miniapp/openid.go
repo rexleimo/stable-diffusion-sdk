@@ -9,6 +9,7 @@ import (
 	"stable-diffusion-sdk/utils/http"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type ResJscode2session struct {
@@ -49,13 +50,21 @@ func getOpenId(ctx *gin.Context) {
 
 	if u == nil {
 		// 不存在的时候添加一条
-		handles.InsertUser(saveUser)
+		ior, err3 := handles.InsertUser(saveUser)
+		if err3 != nil {
+			ctx.JSON(400, gin.H{"error": err3.Error()})
+			return
+		}
+		saveUser.ID = ior.InsertedID.(primitive.ObjectID)
 	} else {
 		saveUser = u
 	}
 
-	fmt.Println(saveUser)
+	jwt_token := handles.Login(&models.User{
+		ID:   saveUser.ID,
+		Name: saveUser.Name,
+	})
 
-	ctx.JSON(200, gin.H{"open_id": resp.Openid})
+	ctx.JSON(200, gin.H{"data": jwt_token})
 
 }

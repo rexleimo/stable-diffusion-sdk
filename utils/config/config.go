@@ -15,6 +15,7 @@ type Config struct {
 	SDServer      SDServer      `yaml:"sdserver"`
 	MongoDB       MongoDB       `yaml:"mongodb"`
 	MiniAppConfig MiniAppConfig `yaml:"miniapp"`
+	JwtConfig     JwtConfig     `yaml:"jwt"`
 }
 
 func GetConfig() *Config {

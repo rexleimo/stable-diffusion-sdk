@@ -8,3 +8,6 @@ mongodb:
 miniapp:
   appid: 
   appsecret: 
+
+jwt:
+  secret: 
