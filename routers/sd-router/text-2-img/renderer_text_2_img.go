@@ -45,7 +45,7 @@ func sendText2Img(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&json)
 
 	json.NegativePrompt = fmt.Sprintf(`%s,%s`, json.NegativePrompt, categroy.NegativePrompt)
-	json.Prompt = fmt.Sprintf(`%s,%s`, categroy.Pormpt, json.Prompt)
+	json.Prompt = fmt.Sprintf(`%s,%s`, json.Prompt, categroy.Pormpt)
 	fmt.Println(json)
 
 	if err != nil {
