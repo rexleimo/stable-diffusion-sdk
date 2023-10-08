@@ -79,7 +79,7 @@
 
         </textarea>
       </div>
-      
+
       <button type="submit" class="btn btn-primary">提交</button>
     </form>
   </div>
@@ -88,7 +88,7 @@
 {{template "public/footer.html" .}}
 
 <script>
-  document.forms.item(0).onsubmit = function(e) {
+  document.forms.item(0).onsubmit = function (e) {
     e.preventDefault();
     formData = new FormData(this);
     // formData to json string

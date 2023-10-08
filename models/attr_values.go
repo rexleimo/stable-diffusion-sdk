@@ -14,6 +14,7 @@ type AttrValue struct {
 	Name     string    `json:"name" binding:"required"`
 	EnName   string    `json:"en_name" bson:"en_name" binding:"required"` //由于没钱不调用翻译api
 	PID      string    `json:"pid" bson:"pid" binding:"required"`
+	Lora     string    `json:"lora" bson:"lora"`
 	Covery   string    `json:"coverage" bson:"cover"`
 	CreateAt time.Time `json:"create_at,omitempty" bson:"create_at,omitempty"`
 	UpdateAt time.Time `json:"update_at,omitempty" bson:"update_at,omitempty"`

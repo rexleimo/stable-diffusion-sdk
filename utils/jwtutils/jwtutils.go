@@ -2,6 +2,7 @@ package jwtutils
 
 import (
 	"fmt"
+	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/utils/config"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -20,8 +21,9 @@ func SignedString(claims jwt.Claims) (string, error) {
 	return token.SignedString(secret)
 }
 
-func Parse(tokenString string) (jwt.MapClaims, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+func Parse(tokenString string) (*models.BaseClaims, error) {
+
+	token, err := jwt.ParseWithClaims(tokenString, &models.BaseClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("不支持的签名算法")
 		}
@@ -35,10 +37,9 @@ func Parse(tokenString string) (jwt.MapClaims, error) {
 	}
 
 	// 获取载荷信息
-	claims, ok := token.Claims.(jwt.MapClaims)
+	claims, ok := token.Claims.(*models.BaseClaims)
 	if ok && token.Valid {
 		return claims, nil
 	}
-
-	return nil, fmt.Errorf("无效的令牌")
+	return nil, fmt.Errorf("token is invalid")
 }

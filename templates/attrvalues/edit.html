@@ -1,11 +1,11 @@
-{{define "attrvalues/posts.html"}}
+{{define "attrvalues/edit.html"}}
 {{template "public/header.html" .}}
 <div class="row">
   <div class="col-md-6">
     <form>
       <div class="mb-3">
         <label for="name" class="form-label">名称</label>
-        <input type="text" name="name" class="form-control" id="name" placeholder="请输入名称" />
+        <input type="text" name="name" class="form-control" id="name" placeholder="请输入名称" value="{{.info.Name}}" />
       </div>
       <div class="mb-3">
         <label for="enname" class="form-label">英文</label>
@@ -14,13 +14,13 @@
       </div>
       <div class="mb-3">
         <label for="lora" class="form-label">Lora</label>
-        <input type="text" name="lora" class="form-control" id="lora" placeholder="可能使用到Lora" />
+        <input type="text" name="lora" class="form-control" id="lora" placeholder="可能使用到Lora" value="{{.info.Lora}}" />
       </div>
       <div class="mb-3">
         <label for="enname" class="form-label">属性</label>
         <select name="pid" class="form-select" aria-label="Default select attr">
           {{range .attrs}}
-          <option value="{{.ID.Hex}}">
+          <option value="{{.ID.Hex}}" {{if eq .ID.Hex $.info.PID}} selected {{end}}>
             {{.Name}}
           </option>
           {{end}}
@@ -37,7 +37,7 @@
     formData = new FormData(this);
     payload = Object.fromEntries(formData);
     fetch("", {
-      method: "post",
+      method: "{{if ne .info nil}} put {{else}} post {{end}}",
       body: JSON.stringify(payload),
     }).then(res => {
       swal("Good job!", "操作成功", "success");

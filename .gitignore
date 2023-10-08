@@ -3,4 +3,4 @@
 # 不提交存放路径
 
 public/sd_block
-tmp/*
+tmp

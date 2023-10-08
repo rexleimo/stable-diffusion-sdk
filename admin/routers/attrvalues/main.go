@@ -10,4 +10,5 @@ func Init() {
 	rg.GET("", list)
 	rg.GET("post", posts)
 	rg.POST("post", create)
+	rg.PUT("post", update)
 }
