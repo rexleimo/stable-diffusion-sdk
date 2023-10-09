@@ -32,14 +32,15 @@
       </div>
       <div class="mb-3">
         <label for="enname" class="form-label">英文</label>
-        <input type="text" name="en_name" class="form-control" id="enname" placeholder="英文提示词" value="{{.info.EnName}}" />
+        <input type="text" name="en_name" class="form-control" id="enname" placeholder="英文提示词"
+          value="{{.info.EnName}}" />
       </div>
       <div class="mb-3">
         <label for="pid" class="form-label">父级分类</label>
         <select class="form-select" name="pid" id="pid" aria-label="Default select example">
           <option value="">请选择</option>
           {{range .list}}
-          <option value="{{.ID.Hex}}" {{if eq .ID.Hex $.info.PID}}selected="selected"{{end}}>{{.Name}}</option>
+          <option value="{{.ID.Hex}}" {{if eq .ID.Hex $.info.PID}}selected="selected" {{end}}>{{.Name}}</option>
           {{end}}
         </select>
       </div>
@@ -48,32 +49,53 @@
         <select id="select2" class="form-select" name="attrs[]" id="attrs" aria-label="Default select example" multiple>
           {{$attrIds := .info.Attrs}}
           {{range .attrs}}
-            {{$attr := .}}
-            {{$selected := false}}
-              {{range $attrIds}}
-              {{if eq . $attr.ID.Hex}}
-              {{$selected = true}}
-              {{end}}
-            {{end}}
+          {{$attr := .}}
+          {{$selected := false}}
+          {{range $attrIds}}
+          {{if eq . $attr.ID.Hex}}
+          {{$selected = true}}
+          {{end}}
+          {{end}}
           <option value="{{.ID.Hex}}" {{if $selected}}selected{{end}}>{{.Name}}</option>
           {{end}}
         </select>
       </div>
       <div class="mb-3">
         <label for="Checkpoint" class="form-label">Checkpoint</label>
-        <input type="text" name="checkpoint" class="form-control" id="Checkpoint" placeholder="Checkpoint" value="{{.info.Checkpoint}}" />
+        <input type="text" name="checkpoint" class="form-control" id="Checkpoint" placeholder="Checkpoint"
+          value="{{.info.Checkpoint}}" />
       </div>
       <div class="mb-3">
         <label for="Sampler" class="form-label">Sampler</label>
-        <input type="text" name="sampler_index" class="form-control" id="Sampler" placeholder="Sampler" value="{{.info.SamplerIndex}}" />
+        <input type="text" name="sampler_index" class="form-control" id="Sampler" placeholder="Sampler"
+          value="{{.info.SamplerIndex}}" />
       </div>
       <div class="mb-3">
         <label for="CfgScale" class="form-label">CfgScale</label>
-        <input type="number" name="cfg_scale" class="form-control" id="CfgScale" placeholder="CfgScale" value="{{.info.CfgScale}}" />
+        <input type="number" name="cfg_scale" class="form-control" id="CfgScale" placeholder="CfgScale"
+          value="{{.info.CfgScale}}" />
       </div>
       <div class="mb-3">
         <label for="Steps" class="form-label">Steps</label>
         <input type="number" name="steps" class="form-control" id="Steps" placeholder="Steps" value="{{.info.Steps}}" />
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" name="is_size" type="checkbox" value="true" id="isOutput"
+            checked="{{if eq .info.IsSize true}} checked {{end}}">
+          <label class="form-check-label" for="isOutput">
+            是否固定尺寸输出
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imgW" class="form-label">宽度</label>
+        <input type="number" name="img_w" class="form-control" id="imgW" placeholder="Width" value="{{.info.Imgw}}" />
+      </div>
+      <div class="mb-3">
+        <label for="isOutput" class="form-label">高度</label>
+        <input type="number" name="img_h" class="form-control" id="imgH" placeholder="Heigth"
+          value="{{ .info.Imgh }}" />
       </div>
       <div class="mb-3">
         <label for="Prompt" class="form-label">Prompt</label>
@@ -91,7 +113,7 @@
 {{template "public/footer.html" .}}
 
 <script>
-  document.forms.item(0).onsubmit = function(e) {
+  document.forms.item(0).onsubmit = function (e) {
     e.preventDefault();
     formData = new FormData(this);
     // formData to json string

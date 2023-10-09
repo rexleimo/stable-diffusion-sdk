@@ -22,6 +22,9 @@ type Categories struct {
 	SamplerIndex   string             `json:"sampler_index" form:"sampler_index" bson:"sampler_index"`
 	CfgScale       int32              `json:"cfg_scale" form:"cfg_scale" bson:"cfg_scale"`
 	Steps          int32              `json:"steps" form:"steps" bson:"steps"`
+	IsSize         bool               `json:"is_size" form:"is_size" bson:"is_size"`
+	Imgw           int32              `json:"img_w" form:"img_w" bson:"img_w" binding:"required"`
+	Imgh           int32              `json:"img_h" form:"img_h" bson:"img_h" binding:"required"`
 
 	CreateAt  time.Time `json:"create_at,omitempty" bson:"create_at,omitempty"`
 	UpdateAt  time.Time `json:"update_at,omitempty" bson:"update_at,omitempty"`

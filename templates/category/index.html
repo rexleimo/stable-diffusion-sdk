@@ -68,16 +68,28 @@
         <input type="number" name="steps" class="form-control" id="Steps" placeholder="Steps" />
       </div>
       <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" name="is_size" type="checkbox" value="true" id="isOutput">
+          <label class="form-check-label" for="isOutput">
+            是否固定尺寸输出
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imgW" class="form-label">宽度</label>
+        <input type="number" name="img_w" class="form-control" id="imgW" placeholder="Width" />
+      </div>
+      <div class="mb-3">
+        <label for="isOutput" class="form-label">高度</label>
+        <input type="number" name="img_h" class="form-control" id="imgH" placeholder="Heigth" />
+      </div>
+      <div class="mb-3">
         <label for="Prompt" class="form-label">Prompt</label>
-        <textarea name="prompt" id="Prompt" class="form-control">
-
-        </textarea>
+        <textarea name="prompt" id="Prompt" class="form-control"></textarea>
       </div>
       <div class="mb-3">
         <label for="NPrompt" class="form-label">方向提示词</label>
-        <textarea name="negative_prompt" id="NPrompt" class="form-control">
-
-        </textarea>
+        <textarea name="negative_prompt" id="NPrompt" class="form-control"></textarea>
       </div>
 
       <button type="submit" class="btn btn-primary">提交</button>

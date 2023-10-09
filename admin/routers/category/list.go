@@ -18,12 +18,10 @@ func list(ctx *gin.Context) {
 	} else {
 		template = "category/index.html"
 	}
-
 	ctx.HTML(http.StatusOK, template, gin.H{
 		"title": "分类管理",
 		"list":  list,
 		"info":  info,
 		"attrs": a,
 	})
-	return
 }
