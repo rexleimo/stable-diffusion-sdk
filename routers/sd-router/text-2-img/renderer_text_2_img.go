@@ -42,6 +42,11 @@ func sendText2Img(ctx *gin.Context) {
 	json.Steps = categroy.Steps
 	json.SamplerName = categroy.SamplerIndex
 
+	if categroy.IsSize {
+		json.Width = categroy.Imgw
+		json.Height = categroy.Imgh
+	}
+
 	err := ctx.ShouldBindJSON(&json)
 
 	json.NegativePrompt = fmt.Sprintf(`%s,%s`, json.NegativePrompt, categroy.NegativePrompt)
