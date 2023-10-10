@@ -7,6 +7,7 @@ import (
 	"stable-diffusion-sdk/routers/miniapp"
 	"stable-diffusion-sdk/routers/sd-router/progress"
 	text2img "stable-diffusion-sdk/routers/sd-router/text-2-img"
+	"stable-diffusion-sdk/routers/taskroute"
 )
 
 func Init() {
@@ -16,4 +17,5 @@ func Init() {
 	attrs.Init()
 	attrvalues.Init()
 	miniapp.Init()
+	taskroute.Init()
 }
