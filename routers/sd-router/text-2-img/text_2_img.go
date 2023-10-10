@@ -9,7 +9,7 @@ func Init() {
 	group := httpserver.GetInstance().Group("sd")
 	group.Use(middlewares.MiniAppAuthRequired())
 	{
-		group.POST("/text2img", sendText2Img)
+		group.POST("/text2img", sendText2ImgTask)
 	}
 
 }

@@ -20,6 +20,10 @@ type BaseClaims struct {
 	jwt.RegisteredClaims
 }
 
+type ClientBClaims struct {
+	jwt.RegisteredClaims
+}
+
 func (*User) TableName() string {
 	return "users"
 }
