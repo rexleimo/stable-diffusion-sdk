@@ -42,6 +42,10 @@ func Text2ImgProcess(task models.Task) ([]string, error) {
 	json.NegativePrompt = fmt.Sprintf(`%s,%s`, json.NegativePrompt, categroy.NegativePrompt)
 	json.Prompt = fmt.Sprintf(`%s,%s`, json.Prompt, categroy.Pormpt)
 
+	// log the NegativePrompt and Prompt
+	fmt.Println("NegativePrompt:", json.NegativePrompt)
+	fmt.Println("Prompt:", json.Prompt)
+
 	s, _ := Text2ImgApi(json)
 
 	timestampFunc := func() string {
