@@ -10,5 +10,6 @@ func Init() {
 	rg.Use(middlewares.MiniAppAuthRequired())
 	{
 		rg.GET("", getTaskList)
+		rg.POST("/ids", getTaskListByIds)
 	}
 }
