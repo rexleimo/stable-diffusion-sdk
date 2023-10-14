@@ -1,6 +1,7 @@
 package text2img
 
 import (
+	"stable-diffusion-sdk/handles"
 	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/queue"
 	"stable-diffusion-sdk/sdapi/payload"
@@ -36,6 +37,14 @@ func sendText2ImgTask(ctx *gin.Context) {
 
 	userID, _ := ctx.Get("user_id")
 
+	userM, _ := handles.FindUserById(userID.(string))
+
+	if userM.Bonus == 0 {
+		// resp json error and error_code
+		ctx.JSON(400, gin.H{"error": "user has no bonus", "error_code": 10000})
+		return
+	}
+
 	insertData := models.Task{
 		UID:              userID.(string),
 		CID:              cid,
@@ -52,8 +61,13 @@ func sendText2ImgTask(ctx *gin.Context) {
 		return
 	}
 	insertData.ID = ior.InsertedID.(primitive.ObjectID)
+
+	userM.Bonus -= 1
+	handles.UpdateUser(userM)
+
 	go func(data models.Task) {
 		queue.RendererTaskChan() <- data
 	}(insertData)
+
 	ctx.JSON(200, gin.H{"result": ior.InsertedID})
 }

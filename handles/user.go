@@ -2,7 +2,9 @@ package handles
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"os"
 	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/utils/jwtutils"
 	"stable-diffusion-sdk/utils/mongodb"
@@ -11,6 +13,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 
 	mongo "go.mongodb.org/mongo-driver/mongo"
 )
@@ -76,4 +80,54 @@ func Login(user *models.User) string {
 		return ""
 	}
 	return s
+}
+
+// 判断用户今天是否签到了
+func CheckInUserToday(userId string) error {
+	// 判断是否存在 logs文件夹不存在创建
+	_, err := os.Stat("./logs")
+	if err != nil {
+		if os.IsNotExist(err) {
+			os.Mkdir("./logs", 0777)
+		}
+	}
+	dbName := fmt.Sprintf("./logs/bonus-%s.db", time.Now().Format("20060102"))
+	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{})
+	if err != nil {
+		fmt.Println("failed to connect database")
+		return err
+	}
+	dbInstance, _ := db.DB()
+	defer dbInstance.Close()
+	// 迁移表
+	db.AutoMigrate(&models.UserCheckInToday{})
+	var table models.UserCheckInToday
+	db.Find(&table, "user_id = ?", userId)
+
+	// 如果存在 返回已经签到
+	if table.ID != 0 {
+		return errors.New("already check in today")
+	}
+	table.UserID = userId
+	d := db.Create(&table)
+
+	if d.Error != nil {
+		return d.Error
+	}
+
+	u, err2 := FindUserById(userId)
+	if err2 != nil {
+		db.Delete(&table, "user_id = ?", userId)
+		return err2
+	}
+	fmt.Println(u)
+	u.Bonus += u.Bonus + 50
+	err3 := UpdateUser(u)
+
+	if err3 != nil {
+		db.Delete(&table, "user_id = ?", userId)
+		return err3
+	}
+
+	return nil
 }

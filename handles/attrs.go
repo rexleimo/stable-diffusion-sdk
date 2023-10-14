@@ -29,3 +29,13 @@ func GetAttrs() (*[]models.Attr, error) {
 	}
 	return &result, nil
 }
+
+func DeleteAttrById(id string) error {
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	var table models.Attr
+	_, err := mongodb.GetInstance().Collection(table.TableName()).DeleteOne(nil, bson.M{"_id": objectId})
+	if err != nil {
+		return err
+	}
+	return nil
+}

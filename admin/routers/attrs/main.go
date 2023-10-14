@@ -7,4 +7,6 @@ func Init() {
 	rg.GET("", getList)
 	rg.GET("post", post)
 	rg.POST("post", create)
+	rg.PUT(":id", update)
+	rg.DELETE(":id", delete)
 }

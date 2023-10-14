@@ -24,7 +24,7 @@
           <td>{{.EnName}}</td>
           <td>
             <a href="/admin/attrs/post?id={{.ID.Hex}}">编辑</a>
-            <a href="/admin/attrs/{{.ID.Hex}}">删除</a>
+            <a class="deleteBtn" href="/admin/attrs/{{.ID.Hex}}">删除</a>
           </td>
         </tr>
         {{end}}
@@ -33,5 +33,26 @@
   </div>
 </div>
 {{template "public/footer.html" .}}
+<script>
+  document.querySelectorAll('.deleteBtn').forEach((v) => {
+    v.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (confirm('确定删除吗？')) {
+        fetch(e.target.href, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert('删除成功')
+              window.location.reload()
+            }
+          })
+      }
+    })
+  })
+</script>
 {{end}}
-

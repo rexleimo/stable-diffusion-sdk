@@ -44,6 +44,11 @@ func getOpenId(ctx *gin.Context) {
 	open_id := resp.Openid
 	u, _ := handles.FindUserByOpenId(open_id)
 
+	if open_id == "" {
+		ctx.JSON(400, gin.H{"error": "open_id is empty"})
+		return
+	}
+
 	saveUser := &models.User{
 		OpenId: open_id,
 	}
