@@ -84,3 +84,18 @@ func GetTaskListQueyeInTaskId(taskId []string) ([]models.Task, error) {
 	fmt.Println(filter)
 	return GetTaskListAll(filter)
 }
+
+func DeleteTask(taskId string, userId string) error {
+	oid, err := primitive.ObjectIDFromHex(taskId)
+	if err != nil {
+		return err
+	}
+	var table models.Task
+	c := mongodb.GetInstance().Collection(table.TableName())
+	_, err2 := c.DeleteOne(context.Background(), bson.M{"_id": oid, "uid": userId})
+	if err2 != nil {
+		return err2
+	}
+
+	return nil
+}

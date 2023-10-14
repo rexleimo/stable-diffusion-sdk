@@ -11,5 +11,6 @@ func Init() {
 	{
 		rg.GET("", getTaskList)
 		rg.POST("/ids", getTaskListByIds)
+		rg.DELETE(":id", delete)
 	}
 }
