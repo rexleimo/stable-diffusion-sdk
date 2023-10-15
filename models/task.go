@@ -9,6 +9,7 @@ import (
 
 type Task struct {
 	ID               primitive.ObjectID `json:"id,omitempty" form:"id,omitempty" bson:"_id,omitempty"`
+	Type             int8               `json:"type" form:"type" bson:"type"` // type 0 text2img 1 img2img
 	UID              string             `json:"uid" form:"uid" bson:"uid"`
 	CID              string             `json:"cid" form:"cid" bson:"cid"`          // 分类ID
 	Status           int                `json:"status" form:"status" bson:"status"` // 操作状态
