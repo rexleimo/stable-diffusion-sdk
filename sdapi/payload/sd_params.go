@@ -4,6 +4,33 @@ type OverrideSettings struct {
 	SdModelCheckpoint string `json:"sd_model_checkpoint"` //模型名称
 }
 
+type AlwaysonScripts struct {
+	Controlnet Controlnet `json:"controlnet"`
+}
+
+type Controlnet struct {
+	Args []ControlnetArg `json:"args"`
+}
+
+type ControlnetArg struct {
+	Enable bool `json:"enable"`
+
+	InputImage    string  `json:"input_image"`
+	Module        string  `json:"module"`
+	Model         string  `json:"model"`
+	Weight        float64 `json:"weight"`
+	Mask          string  `json:"mask"`
+	ResizeMode    int     `json:"resize_mode"`
+	Lowvram       bool    `json:"lowvram"`
+	ProcessorRes  int     `json:"processor_res"`
+	ThresholdA    float64 `json:"threshold_a"`
+	ThresholdB    float64 `json:"threshold_b"`
+	Guidance      float64 `json:"guidance"`
+	GuidanceStart float64 `json:"guidance_start"`
+	GuidanceEnd   float64 `json:"guidance_end"`
+	Guessmode     bool    `json:"guessmode"`
+}
+
 type SDParams struct {
 	SamplerName       string           `json:"sampler_name"`    //采样器算法,不同的采样器效果也不同。
 	Prompt            string           `json:"prompt"`          //生成图像的提示文本,描述你想要生成什么图像。
@@ -20,6 +47,7 @@ type SDParams struct {
 	SamplerIndex      string           `json:"sampler_index"`      //采样器的索引,比如"Euler"。
 	BatchSize         int32            `json:"batch_size"`         //出图个数
 	OverrideSettings  OverrideSettings `json:"override_settings"`  // sd模型
+	AlwaysonScripts   AlwaysonScripts  `json:"alwayson_scripts"`
 }
 
 type SDImageParams struct {

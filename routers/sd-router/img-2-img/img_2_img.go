@@ -2,7 +2,6 @@ package img2img
 
 import (
 	"encoding/base64"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"stable-diffusion-sdk/core/httpserver"
@@ -36,8 +35,6 @@ func Init() {
 				DenoisingStrength:     0.75,
 				InpaintFullResPadding: 32,
 			}
-
-			fmt.Println(json.InitImages)
 
 			resp := handle.Img2Imgapi(json)
 			s := resp.Result().(*payload.SDResponse)
