@@ -1,6 +1,7 @@
 package handle
 
 import (
+	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/sdapi/payload"
 	"stable-diffusion-sdk/utils/http"
 )
@@ -14,4 +15,14 @@ func Progress() (*payload.SdProgress, error) {
 	apiResp := resp.Result().(*payload.SdProgress)
 
 	return apiResp, nil
+}
+
+func ProcessTask(task models.Task) ([]string, error) {
+	if task.Type == 0 {
+		return Text2ImgProcess(task)
+	} else if task.Type == 1 {
+		return nil, nil
+	} else {
+		return QrcodeProcess(task)
+	}
 }

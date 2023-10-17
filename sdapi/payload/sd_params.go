@@ -74,6 +74,11 @@ type SDImageParams struct {
 	InpaintingMaskInvert  int              `json:"inpainting_mask_invert"`
 }
 
+type SDQrcodeParams struct {
+	StyleID string `json:"style_id"`
+	Qrcode  string `json:"qrcode"` //base_64
+}
+
 type SDResponse struct {
 	Images []string `json:"images"`
 	Info   string   `json:"info"`

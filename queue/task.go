@@ -20,7 +20,7 @@ func ProcessText2ImgQueue() {
 	c := mongodb.GetInstance().Collection("tasks")
 	for task := range ch {
 		// do something
-		s, err := handle.Text2ImgProcess(task)
+		s, err := handle.ProcessTask(task)
 		if err != nil {
 			log.Fatal(err)
 			// uploda status to 400
