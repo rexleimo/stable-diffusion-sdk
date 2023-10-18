@@ -69,5 +69,4 @@ func Text2ImgProcess(task models.Task) ([]string, error) {
 	}
 	fmt.Println(image)
 	return image, nil
-
 }

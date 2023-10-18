@@ -8,6 +8,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -98,4 +99,8 @@ func DeleteTask(taskId string, userId string) error {
 	}
 
 	return nil
+}
+
+func InsertTask(task models.Task) (*mongo.InsertOneResult, error) {
+	return mongodb.GetInstance().Collection(task.TableName()).InsertOne(context.Background(), task)
 }

@@ -2,13 +2,18 @@ package handle
 
 import (
 	"encoding/base64"
+	"fmt"
 	"io/ioutil"
+	"math/rand"
+	"os"
+	"path/filepath"
 	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/sdapi/payload"
+	"time"
 )
 
 func QrcodeProcess(task models.Task) ([]string, error) {
-
+	fmt.Println("render qrcode")
 	data, _ := ioutil.ReadFile(task.QrcodePath)
 	inputImage := base64.StdEncoding.EncodeToString(data)
 
@@ -46,5 +51,24 @@ func QrcodeProcess(task models.Task) ([]string, error) {
 
 	s, _ := Text2ImgApi(json)
 
-	return s, nil
+	timestampFunc := func() string {
+		return fmt.Sprintf("%d%d", time.Now().Unix(), rand.Intn(1000))
+	}
+
+	image := make([]string, 0, 10)
+
+	path := fmt.Sprintf("public/sd_block/%s/%s.png", time.Now().Format("20060102"), timestampFunc())
+	image = append(image, path)
+
+	go func(bStr string, p string) {
+		b, _ := base64.StdEncoding.DecodeString(bStr)
+		os.MkdirAll(filepath.Dir(p), 0755)
+		err := os.WriteFile(p, b, 0644)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(s[0], path)
+
+	fmt.Println(image)
+	return image, nil
 }
