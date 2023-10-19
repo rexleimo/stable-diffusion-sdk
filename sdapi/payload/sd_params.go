@@ -83,3 +83,12 @@ type SDResponse struct {
 	Images []string `json:"images"`
 	Info   string   `json:"info"`
 }
+
+type SdModelsResponse struct {
+	Title     string `json:"title"`
+	ModalName string `json:"modal_name"`
+	Hash      string `json:"hash"`
+	Sha256    string `json:"sha256"`
+	FileName  string `json:"file_name"`
+	Config    string `json:"config"`
+}
