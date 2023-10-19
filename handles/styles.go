@@ -26,9 +26,9 @@ func UpdateStyleById(id string, style models.Style) (*mongo.UpdateResult, error)
 	}})
 }
 
-func GetStyleList() ([]models.Style, error) {
+func GetStyleList(filter primitive.D) ([]models.Style, error) {
 	var table models.Style
-	c, err := mongodb.GetInstance().Collection(table.TableName()).Find(context.Background(), bson.D{})
+	c, err := mongodb.GetInstance().Collection(table.TableName()).Find(context.Background(), filter)
 	if err != nil {
 		return nil, err
 	}
