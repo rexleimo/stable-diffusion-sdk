@@ -9,7 +9,8 @@ import (
 
 func renderList(ctx *gin.Context) {
 
-	list, _ := handles.GetStyleList(bson.D{})
+	filter := bson.D{}
+	list, _ := handles.GetStyleList(filter)
 
 	ctx.HTML(200, "styles/index.html", gin.H{
 		"list": list,

@@ -1,4 +1,52 @@
 {{define "styles/index.html"}}
 {{template "public/header.html" .}}
+<div class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/admin/add" class="btn btn-primary">添加</a>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <colgroup>
+                <col />
+                <col width="80px" />
+                <col />
+                <col />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Cover</th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .list}}
+                <tr>
+                    <td>{{.ID.Hex}}</td>
+                    <td>
+                        <img src="{{.Cover}}" alt="{{.Name}}" width="80px" height="80px" />
+                    </td>
+                    <td>{{.Name}}</td>
+                    <td>{{.CreateAt}}</td>
+                    <td>{{.UpdateAt}}</td>
+                    <td>
+                        <a href="/admin/styles/edit/{{.ID.Hex}}">Edit</a>
+                        <a class="deleteBtn" href="/admin/styles/{{.ID.Hex}}">Delete</a>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{template "public/footer.html" .}}
+{{template "public/deletefunc.html" .}}
 
 {{end}}

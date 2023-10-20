@@ -39,3 +39,22 @@ func GetStyleList(filter primitive.D) ([]models.Style, error) {
 	}
 	return result, nil
 }
+
+func GetStyleOne(filter primitive.D) (*models.Style, error) {
+	var table models.Style
+	c := mongodb.GetInstance().Collection(table.TableName()).FindOne(context.Background(), filter)
+	err := c.Decode(&table)
+	if err != nil {
+		return nil, err
+	}
+	return &table, nil
+}
+
+func GetStyleOneById(id string) (*models.Style, error) {
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	filter := bson.D{{
+		Key:   "_id",
+		Value: objectId,
+	}}
+	return GetStyleOne(filter)
+}
