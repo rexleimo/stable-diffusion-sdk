@@ -1,0 +1,31 @@
+{{ define "scripts/form.html" }}
+
+<script>
+  // get class .form name submit form json ajax
+  $('.postsForm').submit(function(e) {
+    e.preventDefault();
+    const el = e.target;
+    const formData = new FormData(el);
+    var form = $(this);
+    var url = form.attr('action') || "";
+    const data = Object.fromEntries(formData.entries());
+    var method = form.data('method');
+    // use fetch
+    fetch(url, {
+        method: method,
+        body: JSON.stringify(data)
+      }).then(res => {
+        if (res.ok) {
+          swal("Good job!", "操作成功", "success");
+          return res.json()
+        } else {
+          throw new Error("Error");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        swal("Error!", "操作失败", "error");
+      })
+  });
+</script>
+{{end}}

@@ -10,7 +10,7 @@ import (
 func renderForm(ctx *gin.Context) {
 	modles, _ := handle.GetSdModels()
 	ctx.HTML(200, "styles/posts.html", gin.H{
-		"models": modles,
+		"checkpoints": modles,
 	})
 }
 
@@ -19,7 +19,7 @@ func renderEditForm(ctx *gin.Context) {
 	style, _ := handles.GetStyleOneById(idStr)
 	modles, _ := handle.GetSdModels()
 	ctx.HTML(200, "styles/edit.html", gin.H{
-		"style":  style,
-		"models": modles,
+		"style":       style,
+		"checkpoints": modles,
 	})
 }

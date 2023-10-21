@@ -14,8 +14,8 @@ type Style struct {
 	Pormpt         string             `json:"pormpt" form:"pormpt" bson:"prompt"`
 	NegativePrompt string             `json:"negative_prompt" form:"negative_prompt" bson:"negative_prompt"`
 	SamplerIndex   string             `json:"sampler_index" form:"sampler_index" bson:"sampler_index"`
-	CfgScale       int32              `json:"cfg_scale" form:"cfg_scale" bson:"cfg_scale"`
-	Steps          int32              `json:"steps" form:"steps" bson:"steps"`
+	CfgScale       float32            `json:"cfg_scale,string" form:"cfg_scale" bson:"cfg_scale"`
+	Steps          float32            `json:"steps,string" form:"steps" bson:"steps"`
 	Sort           int8               `json:"sort" bson:"sort"`
 	CreateAt       time.Time          `json:"create_at,omitempty" bson:"create_at,omitempty"`
 	UpdateAt       time.Time          `json:"update_at,omitempty" bson:"update_at,omitempty"`
