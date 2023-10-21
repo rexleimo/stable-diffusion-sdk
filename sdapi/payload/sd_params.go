@@ -47,7 +47,7 @@ type SDParams struct {
 	SamplerIndex      string           `json:"sampler_index"`      //采样器的索引,比如"Euler"。
 	BatchSize         int32            `json:"batch_size"`         //出图个数
 	OverrideSettings  OverrideSettings `json:"override_settings"`  // sd模型
-	AlwaysonScripts   AlwaysonScripts  `json:"alwayson_scripts"`
+	AlwaysonScripts   *AlwaysonScripts `json:"alwayson_scripts,omitempty"`
 }
 
 type SDImageParams struct {

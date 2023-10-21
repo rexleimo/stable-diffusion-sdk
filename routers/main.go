@@ -9,6 +9,7 @@ import (
 	"stable-diffusion-sdk/routers/sd-router/progress"
 	"stable-diffusion-sdk/routers/sd-router/qrcode"
 	text2img "stable-diffusion-sdk/routers/sd-router/text-2-img"
+	"stable-diffusion-sdk/routers/stylesroute"
 	"stable-diffusion-sdk/routers/taskroute"
 	"stable-diffusion-sdk/routers/userroute"
 )
@@ -24,4 +25,5 @@ func Init() {
 	miniapp.Init()
 	taskroute.Init()
 	userroute.Init()
+	stylesroute.Init()
 }

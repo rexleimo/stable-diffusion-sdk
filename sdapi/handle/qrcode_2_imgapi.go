@@ -31,7 +31,7 @@ func QrcodeProcess(task models.Task) ([]string, error) {
 		Eta:         0,
 		BatchSize:   1,
 		SamplerName: "Euler a",
-		AlwaysonScripts: payload.AlwaysonScripts{
+		AlwaysonScripts: &payload.AlwaysonScripts{
 			Controlnet: payload.Controlnet{
 				Args: []payload.ControlnetArg{
 					{

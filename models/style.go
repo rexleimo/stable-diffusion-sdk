@@ -9,6 +9,7 @@ import (
 type Style struct {
 	ID             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name           string             `json:"name" bson:"name"`
+	Categories     string             `json:"categories" bson:"categories"`
 	Cover          string             `json:"cover" form:"cover" bson:"cover"`
 	Checkpoint     string             `json:"checkpoint" bson:"checkpoint"`
 	Pormpt         string             `json:"pormpt" form:"pormpt" bson:"prompt"`
