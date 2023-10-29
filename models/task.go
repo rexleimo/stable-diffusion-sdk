@@ -19,6 +19,7 @@ type Task struct {
 	UpdateAt         time.Time          `json:"update_at" form:"update_at" bson:"update_at"`
 	IsDelete         bool               `json:"is_delete" form:"is_delete" bson:"is_delete"`
 	QrcodePath       string             `json:"qrcode_base64" form:"qrcode_base64" bson:"qrcode_base64"`
+	Weight           float32            `json:"weight" form:"weight" bson:"weight"`
 }
 
 func (*Task) TableName() string {

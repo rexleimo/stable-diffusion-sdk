@@ -3,11 +3,15 @@ package handle
 import (
 	"stable-diffusion-sdk/sdapi/payload"
 	"stable-diffusion-sdk/utils/http"
-
-	"github.com/go-resty/resty/v2"
 )
 
-func Img2Imgapi(params payload.SDImageParams) *resty.Response {
-	resp, _ := http.GetSDServer().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post("sdapi/v1/img2img")
-	return resp
+func Img2Imgapi(params payload.SDImageParams) ([]string, error) {
+	resp, err := http.GetSDServer().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post("sdapi/v1/img2img")
+	if err != nil {
+		return nil, err
+	}
+	// fmt.Println(resp.String())
+	apiResp := resp.Result().(*payload.SDResponse)
+
+	return apiResp.Images, nil
 }

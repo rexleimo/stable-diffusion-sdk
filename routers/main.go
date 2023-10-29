@@ -5,6 +5,7 @@ import (
 	"stable-diffusion-sdk/routers/attrvalues"
 	"stable-diffusion-sdk/routers/category"
 	"stable-diffusion-sdk/routers/miniapp"
+	"stable-diffusion-sdk/routers/sd-router/avatar"
 	img2img "stable-diffusion-sdk/routers/sd-router/img-2-img"
 	"stable-diffusion-sdk/routers/sd-router/progress"
 	"stable-diffusion-sdk/routers/sd-router/qrcode"
@@ -26,4 +27,5 @@ func Init() {
 	taskroute.Init()
 	userroute.Init()
 	stylesroute.Init()
+	avatar.Init()
 }

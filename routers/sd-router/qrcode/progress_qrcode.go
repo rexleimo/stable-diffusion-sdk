@@ -20,6 +20,12 @@ func progressQrcode(ctx *gin.Context) {
 	// base64img := base64.StdEncoding.EncodeToString(data)
 
 	userId := ctx.GetString("user_id")
+	userM, _ := handles.FindUserById(userId)
+	if userM.Bonus == 0 {
+		// resp json error and error_code
+		ctx.JSON(400, gin.H{"error": "user has no bonus", "error_code": 10000})
+		return
+	}
 
 	var row payload.SDQrcodeParams
 	err := ctx.ShouldBindJSON(&row)
@@ -52,6 +58,8 @@ func progressQrcode(ctx *gin.Context) {
 	}
 
 	insertData.ID = ior.InsertedID.(primitive.ObjectID)
+	userM.Bonus -= 1
+	handles.UpdateUser(userM)
 	go func(data models.Task) {
 		queue.RendererTaskChan() <- data
 	}(insertData)

@@ -34,11 +34,12 @@ func Init() {
 				SamplerName:           "DPM++ 2M Karras",
 				DenoisingStrength:     0.75,
 				InpaintFullResPadding: 32,
+				AlwaysonScripts:       nil,
 			}
 
-			resp := handle.Img2Imgapi(json)
-			s := resp.Result().(*payload.SDResponse)
-			ctx.String(http.StatusOK, s.Images[0])
+			resp, _ := handle.Img2Imgapi(json)
+
+			ctx.String(http.StatusOK, resp[0])
 		})
 	}
 }

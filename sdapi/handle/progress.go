@@ -1,6 +1,7 @@
 package handle
 
 import (
+	"fmt"
 	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/sdapi/payload"
 	"stable-diffusion-sdk/utils/http"
@@ -18,10 +19,13 @@ func Progress() (*payload.SdProgress, error) {
 }
 
 func ProcessTask(task models.Task) ([]string, error) {
+	fmt.Println("TaskType:", task)
 	if task.Type == 0 {
 		return Text2ImgProcess(task)
 	} else if task.Type == 1 {
 		return nil, nil
+	} else if task.Type == 4 {
+		return AvatarProgress(task)
 	} else {
 		return QrcodeProcess(task)
 	}

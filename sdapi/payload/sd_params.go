@@ -72,6 +72,7 @@ type SDImageParams struct {
 	InpaintFullRes        bool             `json:"inpaint_full_res"`
 	InpaintFullResPadding int              `json:"inpaint_full_res_padding"`
 	InpaintingMaskInvert  int              `json:"inpainting_mask_invert"`
+	AlwaysonScripts       *AlwaysonScripts `json:"alwayson_scripts,omitempty"`
 }
 
 type SDQrcodeParams struct {

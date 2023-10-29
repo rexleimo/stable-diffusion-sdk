@@ -2,7 +2,6 @@ package handle
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
@@ -17,16 +16,16 @@ import (
 func Text2ImgApi(params payload.SDParams) ([]string, error) {
 
 	// params to json string
-	paramsJson, _ := json.Marshal(params)
+	// paramsJson, _ := json.Marshal(params)
 	// print the json
-	fmt.Println(string(paramsJson))
+	// fmt.Println(string(paramsJson))
 
 	resp, err := http.GetSDServer().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post("sdapi/v1/txt2img")
 
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(resp.String())
+	// fmt.Println(resp.String())
 	apiResp := resp.Result().(*payload.SDResponse)
 
 	return apiResp.Images, nil

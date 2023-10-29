@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"stable-diffusion-sdk/handles"
 	"stable-diffusion-sdk/models"
 	"stable-diffusion-sdk/sdapi/payload"
 	"time"
@@ -17,20 +18,25 @@ func QrcodeProcess(task models.Task) ([]string, error) {
 	data, _ := ioutil.ReadFile(task.QrcodePath)
 	inputImage := base64.StdEncoding.EncodeToString(data)
 
+	styleEntity, err := handles.GetStyleOneById(task.CID)
+	if err != nil {
+		return nil, err
+	}
+
 	json := payload.SDParams{
-		Prompt:         "interiortinyhouse interior couch, kitchen, wooden, stairs, table, stove, pan, mug, rug, ((masterpiece)), realistic, epic, details,<lora:ARWinteriortinyhouse:1>",
-		NegativePrompt: "bad-picture-chill-75v,  badhandsv5-neg,  badhandv4,  By bad artist -neg,  easynegative,  ng_deepnegative_v1_75t,  verybadimagenegative_v1.1-6400, Watermark, Text, censored, deformed, bad anatomy, disfigured, poorly drawn face, mutated, extra limb, ugly, poorly drawn hands, missing limb, floating limbs, disconnected limbs, disconnected head, malformed hands, long neck, mutated hands and fingers, bad hands, missing fingers, cropped, worst quality, low quality, mutation, poorly drawn, huge calf, bad hands, fused hand, missing hand, disappearing arms, disappearing thigh, disappearing calf, disappearing legs, missing fingers, fused fingers, abnormal eye proportion, Abnormal hands, abnormal legs, abnormal feet,  abnormal fingers",
+		Prompt:         styleEntity.Pormpt,
+		NegativePrompt: styleEntity.NegativePrompt,
 		OverrideSettings: payload.OverrideSettings{
-			SdModelCheckpoint: "xxmix9realistic_v40.safetensors [18ed2b6c48]",
+			SdModelCheckpoint: styleEntity.Checkpoint,
 		},
-		Seed:        -1,
-		Width:       768,
-		Height:      768,
-		CfgScale:    7,
-		Steps:       20,
-		Eta:         0,
-		BatchSize:   1,
-		SamplerName: "Euler a",
+		Seed:         -1,
+		Width:        768,
+		Height:       768,
+		CfgScale:     int32(styleEntity.CfgScale),
+		Steps:        int32(styleEntity.Steps),
+		Eta:          0,
+		BatchSize:    1,
+		SamplerIndex: styleEntity.SamplerIndex,
 		AlwaysonScripts: &payload.AlwaysonScripts{
 			Controlnet: payload.Controlnet{
 				Args: []payload.ControlnetArg{
@@ -40,7 +46,7 @@ func QrcodeProcess(task models.Task) ([]string, error) {
 						Module:        "none",
 						Model:         "control_v1p_sd15_qrcode_monster [a6e58995]",
 						ResizeMode:    1,
-						Weight:        1.5,
+						Weight:        1.6,
 						GuidanceStart: 0,
 						GuidanceEnd:   1,
 					},
