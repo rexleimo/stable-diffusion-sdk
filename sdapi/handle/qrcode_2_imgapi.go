@@ -38,15 +38,22 @@ func QrcodeProcess(task models.Task) ([]string, error) {
 		BatchSize:    1,
 		SamplerIndex: styleEntity.SamplerIndex,
 		AlwaysonScripts: &payload.AlwaysonScripts{
-			Controlnet: payload.Controlnet{
+			ADetailer: &payload.ADetailer{
+				Args: []payload.ADetailerArg{
+					{
+						AdModel: "face_yolov8s.pt",
+					},
+				},
+			},
+			Controlnet: &payload.Controlnet{
 				Args: []payload.ControlnetArg{
 					{
 						Enable:        true,
 						InputImage:    inputImage,
 						Module:        "none",
 						Model:         "control_v1p_sd15_qrcode_monster [a6e58995]",
-						ResizeMode:    1,
-						Weight:        1.6,
+						ResizeMode:    2,
+						Weight:        1.55,
 						GuidanceStart: 0,
 						GuidanceEnd:   1,
 					},

@@ -5,11 +5,20 @@ type OverrideSettings struct {
 }
 
 type AlwaysonScripts struct {
-	Controlnet Controlnet `json:"controlnet"`
+	Controlnet *Controlnet `json:"controlnet"`
+	ADetailer  *ADetailer  `json:"adetailer"`
 }
-
 type Controlnet struct {
 	Args []ControlnetArg `json:"args"`
+}
+
+type ADetailer struct {
+	Args []ADetailerArg `json:"args"`
+}
+
+type ADetailerArg struct {
+	AdModel    string  `json:"ad_model"`
+	AdMaskBlur float32 `json:"ad_mask_blur"`
 }
 
 type ControlnetArg struct {

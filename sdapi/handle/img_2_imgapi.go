@@ -1,6 +1,7 @@
 package handle
 
 import (
+	"fmt"
 	"stable-diffusion-sdk/sdapi/payload"
 	"stable-diffusion-sdk/utils/http"
 )
@@ -10,7 +11,7 @@ func Img2Imgapi(params payload.SDImageParams) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	// fmt.Println(resp.String())
+	fmt.Println(resp.String())
 	apiResp := resp.Result().(*payload.SDResponse)
 
 	return apiResp.Images, nil

@@ -35,8 +35,7 @@ func AvatarProgress(task models.Task) ([]string, error) {
 	fmt.Println("render avatar")
 	fmt.Println(task.QrcodePath)
 	data, _ := ioutil.ReadFile(task.QrcodePath)
-	size, err := GetImageSize(task.QrcodePath)
-	fmt.Println(err)
+	size, _ := GetImageSize(task.QrcodePath)
 	inputImage := base64.StdEncoding.EncodeToString(data)
 
 	styleEntity, err := handles.GetStyleOneById(task.CID)
@@ -63,7 +62,8 @@ func AvatarProgress(task models.Task) ([]string, error) {
 		DenoisingStrength:     0.45,
 		InpaintFullResPadding: 32,
 		AlwaysonScripts: &payload.AlwaysonScripts{
-			Controlnet: payload.Controlnet{
+			ADetailer: nil,
+			Controlnet: &payload.Controlnet{
 				Args: []payload.ControlnetArg{
 					{
 						Enable:        true,
@@ -79,7 +79,6 @@ func AvatarProgress(task models.Task) ([]string, error) {
 			},
 		},
 	}
-
 	s, _ := Img2Imgapi(json)
 
 	timestampFunc := func() string {
