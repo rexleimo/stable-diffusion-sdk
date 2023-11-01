@@ -18,3 +18,5 @@ type SdProgress struct {
 	CurrentImage string          `json:"current_image"`
 	TextInfo     string          `json:"textinfo"`
 }
+
+// lightingBasedPicture_v10 [0c4bd571]

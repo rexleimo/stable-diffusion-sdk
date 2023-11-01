@@ -12,5 +12,6 @@ func main() {
 	routers.Init()
 	adminrouters.Init()
 	go queue.ProcessText2ImgQueue()
+	queue.Init()
 	httpserver.GetInstance().Run(":7100")
 }

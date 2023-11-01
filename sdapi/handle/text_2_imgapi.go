@@ -25,7 +25,7 @@ func Text2ImgApi(params payload.SDParams) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	// fmt.Println(resp.String())
+	fmt.Println(resp.String())
 	apiResp := resp.Result().(*payload.SDResponse)
 
 	return apiResp.Images, nil

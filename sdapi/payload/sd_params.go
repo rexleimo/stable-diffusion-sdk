@@ -29,7 +29,7 @@ type ADetailerArg struct {
 type ControlnetArg struct {
 	Enable bool `json:"enable"`
 
-	InputImage    string  `json:"input_image"`
+	InputImage    string  `json:"image"`
 	Module        string  `json:"module"`
 	Model         string  `json:"model"`
 	Weight        float64 `json:"weight"`

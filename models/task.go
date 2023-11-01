@@ -18,7 +18,7 @@ type Task struct {
 	CreateAt         time.Time          `json:"create_at" form:"create_at" bson:"create_at"`
 	UpdateAt         time.Time          `json:"update_at" form:"update_at" bson:"update_at"`
 	IsDelete         bool               `json:"is_delete" form:"is_delete" bson:"is_delete"`
-	QrcodePath       string             `json:"qrcode_base64" form:"qrcode_base64" bson:"qrcode_base64"`
+	QrcodePath       string             `json:"qrcode_base64" form:"qrcode_base64" bson:"qrcode_base64"` //基于什么图进行渲染
 	Weight           float32            `json:"weight" form:"weight" bson:"weight"`
 }
 

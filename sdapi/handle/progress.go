@@ -24,6 +24,8 @@ func ProcessTask(task models.Task) ([]string, error) {
 		return Text2ImgProcess(task)
 	} else if task.Type == 1 {
 		return nil, nil
+	} else if task.Type == 5 {
+		return LightingProcess(task)
 	} else if task.Type == 4 {
 		return AvatarProgress(task)
 	} else {

@@ -16,6 +16,10 @@ func RendererTaskChan() chan models.Task {
 	return ch
 }
 
+func InstallQueyue(data models.Task) {
+	ch <- data
+}
+
 func ProcessText2ImgQueue() {
 	c := mongodb.GetInstance().Collection("tasks")
 	for task := range ch {
@@ -38,5 +42,21 @@ func ProcessText2ImgQueue() {
 				log.Fatalln(err)
 			}
 		}
+	}
+}
+
+// 重启服务的时候需要init ququq
+func Init() {
+	c := mongodb.GetInstance().Collection("tasks")
+	c2, _ := c.Find(context.Background(), bson.D{
+		{Key: "status", Value: 0},
+	})
+	var list []models.Task
+	err := c2.All(context.Background(), &list)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	for _, v := range list {
+		ch <- v
 	}
 }

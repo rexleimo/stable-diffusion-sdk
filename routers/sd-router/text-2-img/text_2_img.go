@@ -10,6 +10,7 @@ func Init() {
 	group.Use(middlewares.MiniAppAuthRequired())
 	{
 		group.POST("/text2img", sendText2ImgTask)
+		group.POST("/lighting", lightingText2Img)
 	}
 
 }

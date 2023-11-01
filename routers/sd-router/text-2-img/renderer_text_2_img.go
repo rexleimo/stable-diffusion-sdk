@@ -65,9 +65,7 @@ func sendText2ImgTask(ctx *gin.Context) {
 	userM.Bonus -= 1
 	handles.UpdateUser(userM)
 
-	go func(data models.Task) {
-		queue.RendererTaskChan() <- data
-	}(insertData)
+	go queue.InstallQueyue(insertData)
 
 	ctx.JSON(200, gin.H{"result": ior.InsertedID})
 }
