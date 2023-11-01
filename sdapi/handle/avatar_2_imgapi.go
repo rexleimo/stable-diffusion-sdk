@@ -61,9 +61,8 @@ func AvatarProgress(task models.Task) ([]string, error) {
 		Mask:                  "",
 		DenoisingStrength:     0.45,
 		InpaintFullResPadding: 32,
-		AlwaysonScripts: &payload.AlwaysonScripts{
-			ADetailer: nil,
-			Controlnet: &payload.Controlnet{
+		AlwaysonScripts: &payload.AlwaysonImageScripts{
+			Controlnet: payload.Controlnet{
 				Args: []payload.ControlnetArg{
 					{
 						Enable:        true,
@@ -79,6 +78,7 @@ func AvatarProgress(task models.Task) ([]string, error) {
 			},
 		},
 	}
+
 	s, _ := Img2Imgapi(json)
 
 	timestampFunc := func() string {
