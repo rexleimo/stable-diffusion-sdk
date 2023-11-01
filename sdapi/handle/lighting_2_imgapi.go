@@ -25,7 +25,7 @@ func LightingProcess(task models.Task) ([]string, error) {
 		return nil, err
 	}
 
-	json := payload.SDParams{
+	jsonStruct := payload.SDParams{
 		Prompt:         styleEntity.Pormpt,
 		NegativePrompt: styleEntity.NegativePrompt,
 		OverrideSettings: payload.OverrideSettings{
@@ -58,8 +58,13 @@ func LightingProcess(task models.Task) ([]string, error) {
 			},
 		},
 	}
-
-	s, _ := Text2ImgApi(json)
+	// write json string to 1.txt
+	// jsonStr, err := json.Marshal(jsonStruct)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// err = ioutil.WriteFile("1.txt", jsonStr, 0644)
+	s, _ := Text2ImgApi(jsonStruct)
 
 	timestampFunc := func() string {
 		return fmt.Sprintf("%d%d", time.Now().Unix(), rand.Intn(1000))
