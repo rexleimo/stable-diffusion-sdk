@@ -14,12 +14,18 @@ import (
 )
 
 func Text2ImgApi(params payload.SDParams) ([]string, error) {
+	resp, err := http.GetSDServer().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post("sdapi/v1/txt2img")
 
-	// params to json string
-	// paramsJson, _ := json.Marshal(params)
-	// print the json
-	// fmt.Println(string(paramsJson))
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(resp.String())
+	apiResp := resp.Result().(*payload.SDResponse)
 
+	return apiResp.Images, nil
+}
+
+func TextOnlyControlNet2ImgApi(params payload.SDLightingParams) ([]string, error) {
 	resp, err := http.GetSDServer().SetResult(&payload.SDResponse{}).SetHeader("Content-Type", "application/json").SetBody(params).Post("sdapi/v1/txt2img")
 
 	if err != nil {

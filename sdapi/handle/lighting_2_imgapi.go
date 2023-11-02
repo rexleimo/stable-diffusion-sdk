@@ -25,7 +25,7 @@ func LightingProcess(task models.Task) ([]string, error) {
 		return nil, err
 	}
 
-	jsonStruct := payload.SDParams{
+	jsonStruct := payload.SDLightingParams{
 		Prompt:         styleEntity.Pormpt,
 		NegativePrompt: styleEntity.NegativePrompt,
 		OverrideSettings: payload.OverrideSettings{
@@ -39,9 +39,8 @@ func LightingProcess(task models.Task) ([]string, error) {
 		Eta:          0,
 		BatchSize:    1,
 		SamplerIndex: styleEntity.SamplerIndex,
-		AlwaysonScripts: &payload.AlwaysonScripts{
-			ADetailer: nil,
-			Controlnet: &payload.Controlnet{
+		AlwaysonScripts: &payload.AlwaysonImageScripts{
+			Controlnet: payload.Controlnet{
 				Args: []payload.ControlnetArg{
 					{
 						Enable:        true,
@@ -50,7 +49,7 @@ func LightingProcess(task models.Task) ([]string, error) {
 						Mask:          "",
 						Model:         "lightingBasedPicture_v10 [0c4bd571]",
 						ResizeMode:    1,
-						Weight:        0.45,
+						Weight:        0.5,
 						GuidanceStart: 0,
 						GuidanceEnd:   1,
 					},
@@ -64,7 +63,7 @@ func LightingProcess(task models.Task) ([]string, error) {
 	// 	return nil, err
 	// }
 	// err = ioutil.WriteFile("1.txt", jsonStr, 0644)
-	s, _ := Text2ImgApi(jsonStruct)
+	s, _ := TextOnlyControlNet2ImgApi(jsonStruct)
 
 	timestampFunc := func() string {
 		return fmt.Sprintf("%d%d", time.Now().Unix(), rand.Intn(1000))
