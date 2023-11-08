@@ -10,5 +10,6 @@ func Init() {
 		rg.GET("/edit/:id", renderEditForm)
 		rg.POST("/posts", postForm)
 		rg.PUT("/edit/:id", editForm)
+		rg.DELETE(":id", deleteForm)
 	}
 }

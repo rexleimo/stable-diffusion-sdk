@@ -58,3 +58,12 @@ func GetStyleOneById(id string) (*models.Style, error) {
 	}}
 	return GetStyleOne(filter)
 }
+
+func DeleteStyle(id string) (*mongo.DeleteResult, error) {
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	var table models.Style
+	return mongodb.GetInstance().Collection(table.TableName()).DeleteOne(context.Background(), bson.D{{
+		Key:   "_id",
+		Value: objectId,
+	}})
+}
