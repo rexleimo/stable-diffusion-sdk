@@ -58,6 +58,13 @@ func GetTaskListByUserId(userId string, pageSize int64, pageNumber int64) ([]mod
 	return GetTaskList(filter, pageSize, pageNumber)
 }
 
+func GetTaskListByUserIdCount(userId string) (int64, error) {
+	filter := bson.D{{Key: "uid", Value: userId}}
+	var result models.Task
+	c := mongodb.GetInstance().Collection(result.TableName())
+	return c.CountDocuments(context.Background(), filter)
+}
+
 // GetTaskListByTaskId 获取任务列表
 func GetTaskListByTaskId(taskId string) (*models.Task, error) {
 	filter := bson.D{{Key: "task_id", Value: taskId}}

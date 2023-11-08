@@ -30,6 +30,7 @@ func getTaskList(ctx *gin.Context) {
 	}
 
 	t, err := handles.GetTaskListByUserId(userId.(string), int64(pageSize), int64(pageNumber))
+	count, _ := handles.GetTaskListByUserIdCount(userId.(string))
 	if err != nil {
 		// response error json
 		ctx.JSON(400, gin.H{"error": err.Error()})
@@ -37,7 +38,7 @@ func getTaskList(ctx *gin.Context) {
 	}
 
 	// response data list from t
-	ctx.JSON(200, gin.H{"data": t})
+	ctx.JSON(200, gin.H{"data": t, "count": count})
 }
 
 func getTaskListByIds(ctx *gin.Context) {
